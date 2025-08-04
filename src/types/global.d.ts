@@ -1,3 +1,27 @@
+import { UseFormRegisterReturn, FieldErrors } from 'react-hook-form';
+
+type Enumerate<
+  Max extends number,
+  IncrementalNumbers extends number[] = []
+> = IncrementalNumbers['length'] extends Max
+  ? IncrementalNumbers[number]
+  : Enumerate<Max, [...IncrementalNumbers, IncrementalNumbers['length']]>;
+
+type IntRange<Min extends number, Max extends number> =
+  | Exclude<Enumerate<Max>, Enumerate<Min>>
+  | Max;
+
+// ==============================
+
+export type globalSettingVariableType = {
+  RESERVATION_AVAILABLE_DAYS: number;
+  SERVICE_START_TIME: string;
+  SERVICE_END_TIME: string;
+  INTERVAL_MINUTES: number;
+  NUM_PER_INTERVAL: number;
+  LATEST_AVAILABLE_HOUR: 'next-day' | IntRange<1, 24>;
+};
+
 export type optionType = {
   label: string;
   value: string | number;
