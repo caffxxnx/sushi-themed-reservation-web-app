@@ -28,3 +28,15 @@ export interface FieldContainerProps {
 
   disabled?: boolean;
 }
+
+export interface RadioCardContainerProps {
+  register: UseFormRegisterReturn<TFieldName>;
+  remoteUrl?: string;
+  options: Array<optionType> | null;
+  className?: string;
+
+  disabled?: boolean;
+  disabledOptions?: [];
+
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}
