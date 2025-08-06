@@ -11,10 +11,8 @@ export default function nativeSelectContainer({
   register,
   remoteUrl,
   options,
-  className,
-  width = '240px',
-  disabled = false,
   onChange,
+  ...rest
 }: NativeSelectContainerProps) {
   let optionsToUse: Array<optionType> = [];
 
@@ -32,12 +30,7 @@ export default function nativeSelectContainer({
   }
 
   return (
-    <NativeSelect.Root
-      size="sm"
-      width={width}
-      className={className}
-      disabled={disabled}
-    >
+    <NativeSelect.Root {...rest}>
       <NativeSelect.Field
         placeholder={placeholder}
         {...register}

@@ -1,5 +1,9 @@
 import { UseFormRegisterReturn, FieldErrors } from 'react-hook-form';
-import { Field as ChakraField, RadioCard } from '@chakra-ui/react';
+import {
+  Field as ChakraField,
+  RadioCard,
+  NativeSelect as Select,
+} from '@chakra-ui/react';
 
 type Enumerate<
   Max extends number,
@@ -31,17 +35,14 @@ export type optionType = {
 
 // ==============================
 
-export interface NativeSelectContainerProps {
+type FieldProp = 'name' | 'value' | 'onChange' | 'defaultValue';
+export interface NativeSelectContainerProps
+  extends Omit<Select.RootProps, FieldProp>,
+    Pick<Select.FieldProps, FieldProp> {
   placeholder: string;
   register: UseFormRegisterReturn<TFieldName>;
   remoteUrl?: string;
   options: Array<optionType> | null;
-  className?: string;
-  width?: string;
-
-  disabled?: boolean;
-
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 export interface FieldContainerProps
