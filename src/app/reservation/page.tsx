@@ -1,5 +1,7 @@
 'use client';
 
+import moment from 'moment';
+
 import NativeSelectContainer from '@/components/native-select-container';
 import RadioCardContainer from '@/components/radio-card-container';
 import FieldContainer from '@/components/field-container';
@@ -8,7 +10,11 @@ import { Flex, Button, ButtonGroup, Input, Box } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+
+import { useContext } from 'react';
+import { ReservationContext } from '@/components/reservationProvider';
 import { z } from 'zod';
+import useSWRMutation from 'swr/mutation';
 
 const FAKE_DATE_OPTIONS = [
   { label: '2025/08/04', value: '2025/08/04' },
@@ -39,17 +45,50 @@ type FormValues = z.infer<typeof formSchema>;
 
 export default function Reservation() {
   const router = useRouter();
+  const reservation = useContext(ReservationContext);
+
+  async function submitReservation(url: string | URL | Request) {
+    await fetch(url, { method: 'GET' });
+  }
+
+  const { trigger: apiTrigger, isMutating: apiIsLoading } = useSWRMutation(
+    'https://httpbin.org/get',
+    submitReservation
+  );
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
+    getValues,
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
   });
 
   const onSubmit = handleSubmit(
-    (data) => console.log(data),
+    async (data) => {
+      console.log(data);
+      try {
+        const resp = await apiTrigger();
+        console.log(resp);
+
+        const HOUR = +getValues('time').split(':')[0];
+        const MIN = +getValues('time').split(':')[1];
+        reservation.setup({
+          reservationID: 'qwer', // TODO: resp.id
+          reservationDateTime: +moment(getValues('date'))
+            .set('hour', HOUR)
+            .set('minute', MIN)
+            .format('x'),
+          Name: getValues('name'),
+          Phone: getValues('phone'),
+          Number: 2,
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
     (error) => {
       console.error('Form submission error:', error);
     }
@@ -102,7 +141,7 @@ export default function Reservation() {
 
             <ButtonGroup size="sm" variant="outline" mt="4" gap="6">
               <Button onClick={onBack}>Back</Button>
-              <Button colorPalette="blue" type="submit">
+              <Button colorPalette="blue" type="submit" loading={apiIsLoading}>
                 Next
               </Button>
             </ButtonGroup>

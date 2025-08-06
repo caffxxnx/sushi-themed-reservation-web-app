@@ -33,6 +33,14 @@ export type OptionType = {
   disabled?: boolean;
 };
 
+export type Reservation = {
+  reservationID: string | null;
+  reservationDateTime: number | null;
+  Name: string | null;
+  Phone: string | null;
+  Number: number | null;
+};
+
 // ==============================
 
 type FieldProp = 'name' | 'value' | 'onChange' | 'defaultValue';
