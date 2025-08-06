@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { NativeSelectContainerProps, optionType } from '@/types/global';
+import { NativeSelectContainerProps, OptionType } from '@/types/global';
 import { NativeSelect, Spinner } from '@chakra-ui/react';
 
 import useSWR from 'swr';
@@ -14,7 +14,7 @@ export default function nativeSelectContainer({
   onChange,
   ...rest
 }: NativeSelectContainerProps) {
-  let optionsToUse: Array<optionType> = [];
+  let optionsToUse: Array<OptionType> = [];
 
   if (!remoteUrl) {
     if (!options) return <p>No options provided</p>;

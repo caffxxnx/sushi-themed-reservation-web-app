@@ -27,7 +27,7 @@ export type GlobalSettingVariableType = {
   LATEST_AVAILABLE_HOUR: 'next-day' | IntRange<1, 24>;
 };
 
-export type optionType = {
+export type OptionType = {
   label: string;
   value: string | number;
   disabled?: boolean;
@@ -42,7 +42,7 @@ export interface NativeSelectContainerProps
   placeholder: string;
   register: UseFormRegisterReturn<TFieldName>;
   remoteUrl?: string;
-  options: Array<optionType> | null;
+  options: Array<OptionType> | null;
 }
 
 export interface FieldContainerProps
@@ -55,5 +55,5 @@ export interface FieldContainerProps
 export interface RadioCardContainerProps extends RadioCard.RootProps {
   register: UseFormRegisterReturn<TFieldName>;
   remoteUrl?: string;
-  options: Array<optionType> | null;
+  options: Array<OptionType> | null;
 }

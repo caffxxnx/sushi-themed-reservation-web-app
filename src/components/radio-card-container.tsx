@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import useSWR from 'swr';
-import { RadioCardContainerProps, optionType } from '@/types/global';
+import { RadioCardContainerProps, OptionType } from '@/types/global';
 import { Flex, Box, RadioCard, Spinner } from '@chakra-ui/react';
 
 const fetcher = (...args: [RequestInfo, RequestInit?]) =>
@@ -12,7 +12,7 @@ export default function radioCardContainer({
   options,
   ...rest
 }: RadioCardContainerProps) {
-  let optionsToUse: Array<optionType> = [];
+  let optionsToUse: Array<OptionType> = [];
 
   if (!remoteUrl) {
     if (!options) return <p>No options provided</p>;
