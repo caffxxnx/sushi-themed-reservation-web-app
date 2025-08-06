@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
-import { Provider } from "@/components/ui/provider"
+import { Provider } from '@/components/ui/provider';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import { Flex } from '@chakra-ui/react';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -24,11 +25,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning={true}>
+    <html lang="en" suppressHydrationWarning={true}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Provider>{children}</Provider>
+        <Provider>
+          <Flex
+            gap="32px"
+            alignItems="center"
+            justifyContent="center"
+            p="8"
+            h="100vh"
+          >
+            <Flex
+              direction="column"
+              alignItems="center"
+              w="100%"
+              maxW="600px"
+              pb="6"
+            >
+              {children}
+            </Flex>
+          </Flex>
+        </Provider>
       </body>
     </html>
   );
