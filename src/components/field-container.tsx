@@ -6,11 +6,10 @@ export default function FieldContainer({
   prop,
   children,
   errors,
-  className,
-  disabled = false,
+  ...rest
 }: FieldContainerProps) {
   return (
-    <Field.Root invalid={!!errors[prop]} className={className} disabled={disabled}>
+    <Field.Root invalid={!!errors[prop]} {...rest}>
       <Field.Label>{label}</Field.Label>
       {children}
       <Field.ErrorText>

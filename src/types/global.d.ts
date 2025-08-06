@@ -1,4 +1,5 @@
 import { UseFormRegisterReturn, FieldErrors } from 'react-hook-form';
+import { Field as ChakraField } from '@chakra-ui/react';
 
 type Enumerate<
   Max extends number,
@@ -43,14 +44,11 @@ export interface NativeSelectContainerProps {
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export interface FieldContainerProps {
-  children: React.ReactNode;
+export interface FieldContainerProps
+  extends Omit<ChakraField.RootProps, 'label'> {
   prop: string;
   errors: FieldErrors;
   label: string;
-  className?: string;
-
-  disabled?: boolean;
 }
 
 export interface RadioCardContainerProps {
