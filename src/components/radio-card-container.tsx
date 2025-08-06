@@ -10,8 +10,7 @@ export default function radioCardContainer({
   register,
   remoteUrl,
   options,
-  className,
-  disabled = false,
+  ...rest
 }: RadioCardContainerProps) {
   let optionsToUse: Array<optionType> = [];
 
@@ -29,7 +28,7 @@ export default function radioCardContainer({
   }
 
   return (
-    <RadioCard.Root className={className} disabled={disabled} align="center">
+    <RadioCard.Root {...rest}>
       <Flex gap="10px" wrap="wrap">
         {optionsToUse.map((item) => (
           <Box w="80px" key={item.value}>

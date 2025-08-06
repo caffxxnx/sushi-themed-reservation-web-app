@@ -83,6 +83,7 @@ export default function Reservation() {
                 <RadioCardContainer
                   register={register('time')}
                   options={FAKE_TIME_OPTIONS}
+                  align="center"
                 />
               </FieldContainer>
             )}

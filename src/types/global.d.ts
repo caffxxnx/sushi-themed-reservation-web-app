@@ -1,5 +1,5 @@
 import { UseFormRegisterReturn, FieldErrors } from 'react-hook-form';
-import { Field as ChakraField } from '@chakra-ui/react';
+import { Field as ChakraField, RadioCard } from '@chakra-ui/react';
 
 type Enumerate<
   Max extends number,
@@ -51,14 +51,8 @@ export interface FieldContainerProps
   label: string;
 }
 
-export interface RadioCardContainerProps {
+export interface RadioCardContainerProps extends RadioCard.RootProps {
   register: UseFormRegisterReturn<TFieldName>;
   remoteUrl?: string;
   options: Array<optionType> | null;
-  className?: string;
-
-  disabled?: boolean;
-  disabledOptions?: [];
-
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
