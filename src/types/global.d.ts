@@ -18,7 +18,7 @@ type IntRange<Min extends number, Max extends number> =
 
 // ==============================
 
-export type globalSettingVariableType = {
+export type GlobalSettingVariableType = {
   RESERVATION_AVAILABLE_DAYS: number;
   SERVICE_START_TIME: string;
   SERVICE_END_TIME: string;

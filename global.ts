@@ -1,6 +1,6 @@
-import type { globalSettingVariableType } from '@/types/global.d.ts';
+import type { GlobalSettingVariableType } from '@/types/global.d.ts';
 
-const globalSettingVariable: globalSettingVariableType = {
+const GLOBAL_SETTING_VARIABLE: GlobalSettingVariableType = {
   RESERVATION_AVAILABLE_DAYS: 180,
   SERVICE_START_TIME: '10:00',
   SERVICE_END_TIME: '18:00',
@@ -9,4 +9,4 @@ const globalSettingVariable: globalSettingVariableType = {
   LATEST_AVAILABLE_HOUR: 'next-day',
 };
 
-export default globalSettingVariable;
+export default GLOBAL_SETTING_VARIABLE;
