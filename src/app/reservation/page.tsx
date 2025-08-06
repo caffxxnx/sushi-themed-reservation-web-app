@@ -85,6 +85,7 @@ export default function Reservation() {
           Phone: getValues('phone'),
           Number: 2,
         });
+        router.push('/confirmation');
       } catch (e) {
         console.log(e);
       }
