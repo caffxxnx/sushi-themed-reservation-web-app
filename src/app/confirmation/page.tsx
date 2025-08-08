@@ -2,7 +2,7 @@
 
 import moment from 'moment';
 
-import { Flex, Button, Grid, GridItem, Box } from '@chakra-ui/react';
+import { Flex, Button, Grid, GridItem, Box, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 import { ReservationContext } from '@/components/reservationProvider';
@@ -12,7 +12,9 @@ import { Spinner } from '@chakra-ui/react';
 function ConfirmationInfo(reservationInfo: Reservation) {
   return (
     <>
-      <h1>Your reservation has completed</h1>
+      <Text fontSize="xl" fontWeight="bold">
+        Your reservation has completed
+      </Text>
       <Grid templateColumns="100px 1fr" gap="4">
         <GridItem>
           <Box>Reservation</Box>
@@ -70,7 +72,13 @@ export default function Confirmation() {
   }
 
   return (
-    <>
+    <Flex
+      gap="20px"
+      h="100%"
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+    >
       <Flex gap="20px" direction="column" alignItems="center">
         {reservation.isLoading ? (
           <Spinner />
@@ -81,6 +89,6 @@ export default function Confirmation() {
           Back to top
         </Button>
       </Flex>
-    </>
+    </Flex>
   );
 }

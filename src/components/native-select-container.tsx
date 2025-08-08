@@ -34,6 +34,8 @@ export default function nativeSelectContainer({
       <NativeSelect.Field
         placeholder={placeholder}
         {...register}
+        bg="brand.300"
+        borderColor="brand.400"
         onChange={(e) => {
           register.onChange(e);
           if (onChange) onChange(e);

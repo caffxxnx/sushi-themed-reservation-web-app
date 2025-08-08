@@ -32,7 +32,19 @@ export default function radioCardContainer({
       <Flex gap="10px" wrap="wrap">
         {optionsToUse.map((item) => (
           <Box w="80px" key={item.value}>
-            <RadioCard.Item value={`${item.value}`} disabled={item.disabled}>
+            <RadioCard.Item
+              value={`${item.value}`}
+              disabled={item.disabled}
+              bg="brand.300"
+              borderColor="brand.400"
+              _checked={{ bg: 'brand.400', color: 'brand.300' }}
+              _hover={{
+                bg: 'brand.500',
+                color: 'brand.300',
+                cursor: 'pointer',
+                transition: 'all 0.15s ease-in-out',
+              }}
+            >
               <RadioCard.ItemHiddenInput {...register} />
               <RadioCard.ItemControl>
                 <RadioCard.ItemText>{item.label}</RadioCard.ItemText>

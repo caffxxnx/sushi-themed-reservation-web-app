@@ -53,7 +53,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReservationProvider>
-          <Provider>
+          <Provider forcedTheme="light">
             <Flex
               gap="32px"
               alignItems="center"
@@ -65,6 +65,7 @@ export default async function RootLayout({
                 direction="column"
                 alignItems="center"
                 w="100%"
+                h="100%"
                 maxW="600px"
                 pb="6"
               >

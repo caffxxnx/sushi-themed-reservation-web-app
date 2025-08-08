@@ -89,43 +89,70 @@ export default function Reservation() {
 
   return (
     <>
-      <Box w="100%" maxW="450px">
-        <form onSubmit={onSubmit}>
-          <Flex gap="20px" direction="column" alignItems="center">
-            <FieldContainer label="Date" prop="date" errors={errors}>
-              <NativeSelectContainer
-                register={register('date')}
-                placeholder="Select a date"
-                remoteUrl="/api/getAvailableDate"
-                onChange={onDateChange}
-              />
-            </FieldContainer>
-
-            {formDate && (
-              <FieldContainer label="Time" prop="time" errors={errors}>
-                <RadioCardContainer
-                  register={register('time')}
-                  align="center"
-                  remoteUrl={`/api/getAvailableTimeByDate?date=${formDate}`}
+      <Box w="100%" h="100%" maxW="450px">
+        <form style={{ height: '100%' }} onSubmit={onSubmit}>
+          <Flex
+            gap="20px"
+            h="100%"
+            direction="column"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Flex w="100%" gap="20px" direction="column" alignItems="center">
+              <FieldContainer label="Date" prop="date" errors={errors}>
+                <NativeSelectContainer
+                  register={register('date')}
+                  placeholder="Select a date"
+                  remoteUrl="/api/getAvailableDate"
+                  onChange={onDateChange}
                 />
               </FieldContainer>
-            )}
 
-            {formTime && (
-              <>
-                <FieldContainer label="Name" prop="name" errors={errors}>
-                  <Input placeholder="Yamada Mahito" {...register('name')} />
+              {formDate && (
+                <FieldContainer label="Time" prop="time" errors={errors}>
+                  <RadioCardContainer
+                    register={register('time')}
+                    align="center"
+                    remoteUrl={`/api/getAvailableTimeByDate?date=${formDate}`}
+                  />
                 </FieldContainer>
+              )}
 
-                <FieldContainer label="Phone" prop="phone" errors={errors}>
-                  <Input placeholder="07012345678" {...register('phone')} />
-                </FieldContainer>
-              </>
-            )}
+              {formTime && (
+                <>
+                  <FieldContainer label="Name" prop="name" errors={errors}>
+                    <Input
+                      placeholder="Yamada Mahito"
+                      {...register('name')}
+                      bg="brand.300"
+                    />
+                  </FieldContainer>
+
+                  <FieldContainer label="Phone" prop="phone" errors={errors}>
+                    <Input
+                      placeholder="07012345678"
+                      {...register('phone')}
+                      bg="brand.300"
+                    />
+                  </FieldContainer>
+                </>
+              )}
+            </Flex>
 
             <ButtonGroup size="sm" variant="outline" mt="4" gap="6">
-              <Button onClick={onBack}>Back</Button>
-              <Button colorPalette="blue" type="submit" loading={apiIsLoading}>
+              <Button
+                onClick={onBack}
+                _hover={{ bg: 'brand.500', color: 'brand.300' }}
+              >
+                Back
+              </Button>
+              <Button
+                bg="brand.400"
+                color="brand.300"
+                _hover={{ bg: 'brand.500' }}
+                type="submit"
+                loading={apiIsLoading}
+              >
                 Next
               </Button>
             </ButtonGroup>
