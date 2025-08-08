@@ -14,9 +14,9 @@ export default function Reservation() {
   const reservationInfo = reservation.info || {
     reservationID: '',
     reservationDateTime: null,
-    Name: '',
-    Phone: '',
-    Number: null,
+    name: '',
+    phone: '',
+    number: null,
   };
 
   function onClick() {
@@ -44,20 +44,20 @@ export default function Reservation() {
             <Box>Name</Box>
           </GridItem>
           <GridItem>
-            <Box>{reservationInfo.Name}</Box>
+            <Box>{reservationInfo.name}</Box>
           </GridItem>
 
           <GridItem>
             <Box>Phone</Box>
           </GridItem>
           <GridItem>
-            <Box>{reservationInfo.Phone}</Box>
+            <Box>{reservationInfo.phone}</Box>
           </GridItem>
 
           <GridItem colSpan={2}>
             <Box textAlign="center" fontWeight="500" fontSize="50px">
-              {reservationInfo.Number
-                ? reservationInfo.Number.toString().padStart(3, '0')
+              {reservationInfo.number
+                ? reservationInfo.number.toString().padStart(3, '0')
                 : '--'}
             </Box>
           </GridItem>

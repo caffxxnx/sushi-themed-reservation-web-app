@@ -36,9 +36,9 @@ export type OptionType = {
 export type Reservation = {
   reservationID: string | null;
   reservationDateTime: number | null;
-  Name: string | null;
-  Phone: string | null;
-  Number: number | null;
+  name: string | null;
+  phone: string | null;
+  number: number | null;
 };
 
 // ==============================
