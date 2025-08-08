@@ -12,3 +12,7 @@ export async function getReservationCount(date: number): Promise<number> {
       .value()?.number || 0;
   return CURR_NUMBER + 1;
 }
+
+export function delaySimulator(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
