@@ -41,13 +41,16 @@ export function ReservationProvider({ children }: ReservationProviderProps) {
         const ID = window.localStorage.getItem('reservation-id');
         const resp = await trigger(`${ID}`);
         console.log(resp);
-        if (resp) {
+        if (resp?.ok) {
           const data = await resp.json();
           setReservation(data);
+        } else if (resp?.status === 404) {
+          window.localStorage.removeItem('reservation-id');
+        } else {
+          throw new Error('Failed to fetch reservation');
         }
       } catch (e) {
         console.log(e);
-        window.localStorage.removeItem('reservation-id');
       } finally {
         setIsInit(true);
       }
