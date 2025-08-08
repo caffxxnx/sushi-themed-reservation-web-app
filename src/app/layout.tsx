@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 import type { Metadata } from 'next';
 import { Provider } from '@/components/ui/provider';
 import { ReservationProvider } from '@/components/reservationProvider';
@@ -5,6 +7,24 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { getReservation } from '@/lib/apis';
 import { Flex } from '@chakra-ui/react';
+
+async function initDB() {
+  try {
+    await fs.promises.readFile('./db/data.json', 'utf-8');
+  } catch (e) {
+    fs.mkdir('db', async (err) => {
+      if (!err) {
+        await fs.promises.writeFile(
+          './db/data.json',
+          JSON.stringify({
+            reservations: [],
+          }),
+          'utf8'
+        );
+      }
+    });
+  }
+}
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -29,6 +49,7 @@ export default async function RootLayout({
   console.log('GET Reservation by uuid');
   // const reservationInfo = await getReservation();
   const reservationInfo = null;
+  initDB();
 
   return (
     <html lang="en" suppressHydrationWarning={true}>
