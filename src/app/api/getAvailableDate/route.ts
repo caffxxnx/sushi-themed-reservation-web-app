@@ -7,8 +7,14 @@ export async function GET() {
 
   const dates: OptionType[] = [...Array(RESERVATION_AVAILABLE_DAYS).keys()].map(
     (v) => ({
-      label: moment().startOf('day').add(v, 'days').format('YYYY-MM-DD'),
-      value: moment().startOf('day').add(v, 'days').format('YYYY-MM-DD'),
+      label: moment()
+        .startOf('day')
+        .add(v + 1, 'days')
+        .format('YYYY-MM-DD'),
+      value: moment()
+        .startOf('day')
+        .add(v + 1, 'days')
+        .format('YYYY-MM-DD'),
     })
   );
 
