@@ -29,12 +29,21 @@ export default function Reservation() {
   const router = useRouter();
   const reservation = useContext(ReservationContext);
 
-  async function submitReservation(url: string | URL | Request) {
-    await fetch(url, { method: 'GET' });
+  function submitReservation(url: string | URL | Request) {
+    const DATE_TIME_TEXT = `${getValues('date')} ${getValues('time')}`;
+
+    return fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({
+        reservationDateTime: +moment(DATE_TIME_TEXT).format('x'),
+        name: getValues('name'),
+        phone: getValues('phone'),
+      }),
+    });
   }
 
   const { trigger: apiTrigger, isMutating: apiIsLoading } = useSWRMutation(
-    'https://httpbin.org/get',
+    '/api/reservation',
     submitReservation
   );
 
@@ -53,20 +62,10 @@ export default function Reservation() {
       console.log(data);
       try {
         const resp = await apiTrigger();
-        console.log(resp);
+        const respData = await resp.json();
 
-        const HOUR = +getValues('time').split(':')[0];
-        const MIN = +getValues('time').split(':')[1];
-        reservation.setup({
-          reservationID: 'qwer', // TODO: resp.id
-          reservationDateTime: +moment(getValues('date'))
-            .set('hour', HOUR)
-            .set('minute', MIN)
-            .format('x'),
-          Name: getValues('name'),
-          Phone: getValues('phone'),
-          Number: 2,
-        });
+        window.localStorage.setItem('reservation-id', respData.reservationID);
+        reservation.setup(respData);
         router.push('/confirmation');
       } catch (e) {
         console.log(e);
