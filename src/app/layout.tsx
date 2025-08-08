@@ -5,7 +5,6 @@ import { Provider } from '@/components/ui/provider';
 import { ReservationProvider } from '@/components/reservationProvider';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { getReservation } from '@/lib/apis';
 import { Flex } from '@chakra-ui/react';
 
 async function initDB() {
@@ -46,9 +45,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log('GET Reservation by uuid');
-  // const reservationInfo = await getReservation();
-  const reservationInfo = null;
   initDB();
 
   return (
@@ -56,7 +52,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReservationProvider defaultInfo={reservationInfo}>
+        <ReservationProvider>
           <Provider>
             <Flex
               gap="32px"
