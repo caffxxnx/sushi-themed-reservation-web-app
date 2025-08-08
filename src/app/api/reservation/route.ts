@@ -5,6 +5,16 @@ import { v4 as uuidv4 } from 'uuid';
 
 // ADD
 export async function POST(request: Request) {
+  if (!request) {
+    return new Response(
+      JSON.stringify({ error: 'data is required' }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+
   try {
     const body = await request.json();
     const { reservationDateTime, name, phone } = body;
