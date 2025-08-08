@@ -23,17 +23,6 @@ const FAKE_DATE_OPTIONS = [
   { label: '2025/08/07', value: '2025/08/07' },
 ];
 
-const FAKE_TIME_OPTIONS = [
-  { label: '10:00', value: '10:00' },
-  { label: '11:00', value: '11:00', disabled: true },
-  { label: '12:00', value: '12:00' },
-  { label: '13:00', value: '13:00' },
-  { label: '14:00', value: '14:00' },
-  { label: '15:00', value: '15:00' },
-  { label: '16:00', value: '16:00' },
-  { label: '17:00', value: '17:00' },
-];
-
 const formSchema = z.object({
   date: z.string().min(1, { message: 'Date is required' }),
   time: z.string({ message: 'Time is required' }),
@@ -122,8 +111,8 @@ export default function Reservation() {
               <FieldContainer label="Time" prop="time" errors={errors}>
                 <RadioCardContainer
                   register={register('time')}
-                  options={FAKE_TIME_OPTIONS}
                   align="center"
+                  remoteUrl={`/api/getAvailableTimeByDate?date=${formDate}`}
                 />
               </FieldContainer>
             )}

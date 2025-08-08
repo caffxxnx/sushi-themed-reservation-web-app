@@ -60,8 +60,19 @@ export interface FieldContainerProps
   label: string;
 }
 
-export interface RadioCardContainerProps extends RadioCard.RootProps {
+interface BaseRadioCardContainerProps extends RadioCard.RootProps {
   register: UseFormRegisterReturn<TFieldName>;
-  remoteUrl?: string;
-  options: Array<OptionType> | null;
 }
+interface RemoteRadioCardContainerProps
+  extends BaseRadioCardContainerProps {
+  options?: never;
+  remoteUrl: string;
+}
+interface LocalRadioCardContainerProps extends BaseRadioCardContainerProps {
+  options: Array<OptionType> | null;
+  remoteUrl?: never;
+}
+
+export type RadioCardContainerProps =
+  | RemoteRadioCardContainerProps
+  | LocalRadioCardContainerProps;

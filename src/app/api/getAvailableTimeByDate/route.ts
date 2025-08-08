@@ -1,0 +1,49 @@
+import _ from 'lodash';
+import fs from 'fs';
+import moment from 'moment';
+import GLOBAL_SETTING_VARIABLE from '@/global';
+import { OptionType } from '@/types/global';
+import { NextRequest } from 'next/server';
+
+function getOpeningTime(queryDate: string) {
+  const { SERVICE_START_TIME } = GLOBAL_SETTING_VARIABLE;
+  return moment(`${queryDate} ${SERVICE_START_TIME}`);
+}
+
+function getCloseTime(queryDate: string) {
+  const { SERVICE_END_TIME } = GLOBAL_SETTING_VARIABLE;
+  return moment(`${queryDate} ${SERVICE_END_TIME}`);
+}
+
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const queryDate = searchParams.get('date') || '';
+
+  const db = await fs.promises.readFile('./db/data.json', 'utf-8');
+  const reservations = JSON.parse(db).reservations;
+
+  const { INTERVAL_MINUTES, NUM_PER_INTERVAL } = GLOBAL_SETTING_VARIABLE;
+
+  const availableTime = getOpeningTime(queryDate);
+  const CLOSING_TIME = getCloseTime(queryDate);
+  const timeOptions: OptionType[] = [];
+  do {
+    const isIntervalFull =
+      (_.chain(reservations)
+        .filter(['reservationDateTime', +availableTime.format('x')])
+        .maxBy('number')
+        .value()?.number || 0) >= NUM_PER_INTERVAL;
+
+    timeOptions.push({
+      disabled: isIntervalFull,
+      label: availableTime.format('HH:mm'),
+      value: availableTime.format('HH:mm'),
+    });
+    availableTime.add(INTERVAL_MINUTES, 'minutes');
+  } while (+availableTime.format('x') <= +CLOSING_TIME.format('x'));
+
+  return new Response(JSON.stringify(timeOptions), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
