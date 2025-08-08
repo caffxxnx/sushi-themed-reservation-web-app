@@ -20,7 +20,9 @@ export default function nativeSelectContainer({
     if (!options) return <p>No options provided</p>;
     optionsToUse = options;
   } else {
-    const { data, error, isLoading } = useSWR(remoteUrl, fetcher);
+    const { data, error, isLoading } = useSWR(remoteUrl, fetcher, {
+      revalidateOnFocus: false,
+    });
 
     optionsToUse = data;
 
