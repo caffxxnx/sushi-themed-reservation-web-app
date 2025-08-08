@@ -16,13 +16,6 @@ import { ReservationContext } from '@/components/reservationProvider';
 import { z } from 'zod';
 import useSWRMutation from 'swr/mutation';
 
-const FAKE_DATE_OPTIONS = [
-  { label: '2025/08/04', value: '2025/08/04' },
-  { label: '2025/08/05', value: '2025/08/05' },
-  { label: '2025/08/06', value: '2025/08/06' },
-  { label: '2025/08/07', value: '2025/08/07' },
-];
-
 const formSchema = z.object({
   date: z.string().min(1, { message: 'Date is required' }),
   time: z.string({ message: 'Time is required' }),
@@ -101,8 +94,8 @@ export default function Reservation() {
             <FieldContainer label="Date" prop="date" errors={errors}>
               <NativeSelectContainer
                 register={register('date')}
-                options={FAKE_DATE_OPTIONS}
                 placeholder="Select a date"
+                remoteUrl="/api/getAvailableDate"
                 onChange={onDateChange}
               />
             </FieldContainer>

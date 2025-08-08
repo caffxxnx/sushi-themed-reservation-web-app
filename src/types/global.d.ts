@@ -44,14 +44,27 @@ export type Reservation = {
 // ==============================
 
 type FieldProp = 'name' | 'value' | 'onChange' | 'defaultValue';
-export interface NativeSelectContainerProps
+interface BaseNativeSelectContainerProps
   extends Omit<Select.RootProps, FieldProp>,
     Pick<Select.FieldProps, FieldProp> {
   placeholder: string;
   register: UseFormRegisterReturn<TFieldName>;
-  remoteUrl?: string;
-  options: Array<OptionType> | null;
 }
+interface RemoteNativeSelectContainerProps
+  extends BaseNativeSelectContainerProps {
+  options?: never;
+  remoteUrl: string;
+}
+
+interface LocalNativeSelectContainerProps
+  extends BaseNativeSelectContainerProps {
+  options: Array<OptionType> | null;
+  remoteUrl?: never;
+}
+
+export type NativeSelectContainerProps =
+  | RemoteNativeSelectContainerProps
+  | LocalNativeSelectContainerProps;
 
 export interface FieldContainerProps
   extends Omit<ChakraField.RootProps, 'label'> {
