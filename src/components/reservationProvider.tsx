@@ -1,4 +1,5 @@
 'use client';
+import moment from 'moment';
 import type { Reservation } from '@/types/global';
 import type { ReactNode } from 'react';
 import {
@@ -43,6 +44,10 @@ export function ReservationProvider({ children }: ReservationProviderProps) {
         console.log(resp);
         if (resp?.ok) {
           const data = await resp.json();
+          if (moment(data.reservationDateTime).isBefore(moment())) {
+            window.localStorage.removeItem('reservation-id');
+            return;
+          }
           setReservation(data);
         } else if (resp?.status === 404) {
           window.localStorage.removeItem('reservation-id');
