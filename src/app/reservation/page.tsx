@@ -53,6 +53,7 @@ export default function Reservation() {
     formState: { errors },
     watch,
     getValues,
+    setValue
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
   });
@@ -79,6 +80,7 @@ export default function Reservation() {
   const onBack = () => router.back();
 
   const onDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setValue('time', null); // Reset time when date changes
     console.log('Selected date:', e.target.value);
   };
 
