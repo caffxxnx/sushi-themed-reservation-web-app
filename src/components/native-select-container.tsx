@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import useSWR from 'swr';
 import { NativeSelectContainerProps, OptionType } from '@/types/global';
 import { NativeSelect, Spinner } from '@chakra-ui/react';
-
-import useSWR from 'swr';
-const fetcher = (...args: [RequestInfo, RequestInit?]) =>
-  fetch(...args).then((res) => res.json());
+import fetcher from '@/util/fetcher';
 
 export default function nativeSelectContainer({
   placeholder = 'Select option',

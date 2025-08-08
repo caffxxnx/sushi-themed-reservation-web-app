@@ -2,9 +2,7 @@
 import useSWR from 'swr';
 import { RadioCardContainerProps, OptionType } from '@/types/global';
 import { Flex, Box, RadioCard, Spinner } from '@chakra-ui/react';
-
-const fetcher = (...args: [RequestInfo, RequestInit?]) =>
-  fetch(...args).then((res) => res.json());
+import fetcher from '@/util/fetcher';
 
 export default function radioCardContainer({
   register,
