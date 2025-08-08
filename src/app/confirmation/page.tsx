@@ -6,8 +6,54 @@ import { Flex, Button, Grid, GridItem, Box } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 import { ReservationContext } from '@/components/reservationProvider';
+import type { Reservation } from '@/types/global';
+import { Spinner } from '@chakra-ui/react';
 
-export default function Reservation() {
+function ConfirmationInfo(reservationInfo: Reservation) {
+  return (
+    <>
+      <h1>Your reservation has completed</h1>
+      <Grid templateColumns="100px 1fr" gap="4">
+        <GridItem>
+          <Box>Reservation</Box>
+        </GridItem>
+        <GridItem>
+          <Box>
+            {reservationInfo.reservationDateTime
+              ? moment(reservationInfo.reservationDateTime).format(
+                  'YYYY-MM-DD HH:mm'
+                )
+              : ''}
+          </Box>
+        </GridItem>
+
+        <GridItem>
+          <Box>Name</Box>
+        </GridItem>
+        <GridItem>
+          <Box>{reservationInfo.name}</Box>
+        </GridItem>
+
+        <GridItem>
+          <Box>Phone</Box>
+        </GridItem>
+        <GridItem>
+          <Box>{reservationInfo.phone}</Box>
+        </GridItem>
+
+        <GridItem colSpan={2}>
+          <Box textAlign="center" fontWeight="500" fontSize="50px">
+            {reservationInfo.number
+              ? reservationInfo.number.toString().padStart(3, '0')
+              : '--'}
+          </Box>
+        </GridItem>
+      </Grid>
+    </>
+  );
+}
+
+export default function Confirmation() {
   const router = useRouter();
   const reservation = useContext(ReservationContext);
 
@@ -26,43 +72,11 @@ export default function Reservation() {
   return (
     <>
       <Flex gap="20px" direction="column" alignItems="center">
-        <h1>Your reservation has completed</h1>
-
-        <Grid templateColumns="100px 1fr" gap="4">
-          <GridItem>
-            <Box>Reservation</Box>
-          </GridItem>
-          <GridItem>
-            <Box>
-              {reservationInfo.reservationDateTime
-                ? moment(reservationInfo.reservationDateTime).format('YYYY-MM-DD HH:mm')
-                : ''}
-            </Box>
-          </GridItem>
-
-          <GridItem>
-            <Box>Name</Box>
-          </GridItem>
-          <GridItem>
-            <Box>{reservationInfo.name}</Box>
-          </GridItem>
-
-          <GridItem>
-            <Box>Phone</Box>
-          </GridItem>
-          <GridItem>
-            <Box>{reservationInfo.phone}</Box>
-          </GridItem>
-
-          <GridItem colSpan={2}>
-            <Box textAlign="center" fontWeight="500" fontSize="50px">
-              {reservationInfo.number
-                ? reservationInfo.number.toString().padStart(3, '0')
-                : '--'}
-            </Box>
-          </GridItem>
-        </Grid>
-
+        {reservation.isLoading ? (
+          <Spinner />
+        ) : (
+          ConfirmationInfo(reservationInfo)
+        )}
         <Button colorPalette="blue" onClick={onClick}>
           Back to top
         </Button>
