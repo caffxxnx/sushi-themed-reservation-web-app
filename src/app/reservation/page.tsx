@@ -53,7 +53,7 @@ export default function Reservation() {
     formState: { errors },
     watch,
     getValues,
-    setValue
+    setValue,
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
   });
