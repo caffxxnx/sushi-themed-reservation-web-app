@@ -22,7 +22,7 @@ class DBAdaptor {
     return fs.promises.writeFile(this.dbPath, JSON.stringify({ data }), 'utf8');
   }
 
-  initDb() {
+  private initDb() {
     return fs.promises.writeFile(
       this.dbPath,
       JSON.stringify({ reservations: [] }),

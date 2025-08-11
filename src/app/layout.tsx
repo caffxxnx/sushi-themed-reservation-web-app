@@ -4,7 +4,6 @@ import { ReservationProvider } from '@/components/ReservationProvider';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Flex } from '@chakra-ui/react';
-import DB from '@/util/dbAdaptor';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,8 +25,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  await DB.initDb();
-
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body
