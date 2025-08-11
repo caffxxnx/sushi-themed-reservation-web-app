@@ -5,17 +5,6 @@ import {
   NativeSelect as Select,
 } from '@chakra-ui/react';
 
-type Enumerate<
-  Max extends number,
-  IncrementalNumbers extends number[] = []
-> = IncrementalNumbers['length'] extends Max
-  ? IncrementalNumbers[number]
-  : Enumerate<Max, [...IncrementalNumbers, IncrementalNumbers['length']]>;
-
-type IntRange<Min extends number, Max extends number> =
-  | Exclude<Enumerate<Max>, Enumerate<Min>>
-  | Max;
-
 // ==============================
 
 export type GlobalSettingVariableType = {
@@ -24,7 +13,6 @@ export type GlobalSettingVariableType = {
   SERVICE_END_TIME: string;
   INTERVAL_MINUTES: number;
   NUM_PER_INTERVAL: number;
-  LATEST_AVAILABLE_HOUR: 'next-day' | IntRange<1, 24>;
 };
 
 export type OptionType = {
@@ -76,8 +64,7 @@ export interface FieldContainerProps
 interface BaseRadioCardContainerProps extends RadioCard.RootProps {
   register: UseFormRegisterReturn<TFieldName>;
 }
-interface RemoteRadioCardContainerProps
-  extends BaseRadioCardContainerProps {
+interface RemoteRadioCardContainerProps extends BaseRadioCardContainerProps {
   options?: never;
   remoteUrl: string;
 }

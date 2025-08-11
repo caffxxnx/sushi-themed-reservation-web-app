@@ -6,7 +6,6 @@ const GLOBAL_SETTING_VARIABLE: GlobalSettingVariableType = {
   SERVICE_END_TIME: '18:00',
   INTERVAL_MINUTES: 60,
   NUM_PER_INTERVAL: 3,
-  LATEST_AVAILABLE_HOUR: 'next-day',
 };
 
 export default GLOBAL_SETTING_VARIABLE;
