@@ -11,6 +11,7 @@ async function initDB() {
   try {
     await fs.promises.readFile('./db/data.json', 'utf-8');
   } catch (e) {
+    console.log(e);
     fs.mkdir('db', async (err) => {
       if (!err) {
         await fs.promises.writeFile(
