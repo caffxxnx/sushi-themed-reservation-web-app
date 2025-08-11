@@ -69,7 +69,7 @@ export default function Navbar() {
       boxShadow="md"
       h="var(--navbar-height)"
     >
-      <Box h="100%" maxW="1200px" m="auto">
+      <Box h="100%" maxW="var(--max-content-width)" m="auto">
         <MobileNavbar menuItems={menuItems} />
         <DesktopNavbar menuItems={menuItems} />
       </Box>

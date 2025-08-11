@@ -30,7 +30,7 @@ export default function BackgroundCanvas() {
       left="50%"
       width="80%"
       height="80%"
-      maxW="1200px"
+      maxW="var(--max-content-width)"
       transform="translate(-50%, -50%)"
     >
       {/* LEFT SUSHI */}
