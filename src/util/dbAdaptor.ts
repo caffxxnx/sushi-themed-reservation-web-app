@@ -18,8 +18,12 @@ class DBAdaptor {
     return fs.promises.readFile(this.dbPath, 'utf-8');
   }
 
-  writeReservationDb(data: Reservation[]) {
-    return fs.promises.writeFile(this.dbPath, JSON.stringify({ data }), 'utf8');
+  writeReservationDb(reservations: Reservation[]) {
+    return fs.promises.writeFile(
+      this.dbPath,
+      JSON.stringify({ reservations }),
+      'utf8'
+    );
   }
 
   private initDb() {
