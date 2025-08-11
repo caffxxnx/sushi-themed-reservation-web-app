@@ -1,18 +1,15 @@
-import fs from 'fs';
 import { Reservation } from '@/types/global';
 import { getReservationCount } from '@/util';
 import { v4 as uuidv4 } from 'uuid';
+import DB from '@/util/dbAdaptor';
 
 // ADD
 export async function POST(request: Request) {
   if (!request) {
-    return new Response(
-      JSON.stringify({ error: 'data is required' }),
-      {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    return new Response(JSON.stringify({ error: 'data is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   try {
@@ -27,15 +24,11 @@ export async function POST(request: Request) {
       number: await getReservationCount(reservationDateTime),
     };
 
-    const db = await fs.promises.readFile('./db/data.json', 'utf-8');
+    const db = await DB.readReservationDb();
     const reservations = JSON.parse(db).reservations;
     reservations.push(newReservation);
 
-    await fs.promises.writeFile(
-      './db/data.json',
-      JSON.stringify({ reservations }),
-      'utf8'
-    );
+    await DB.writeReservationDb(reservations);
 
     return new Response(JSON.stringify(newReservation), {
       status: 201,

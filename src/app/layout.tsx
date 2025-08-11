@@ -1,30 +1,10 @@
-import fs from 'fs';
-
 import type { Metadata } from 'next';
 import { Provider } from '@/components/ui/provider';
 import { ReservationProvider } from '@/components/ReservationProvider';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Flex } from '@chakra-ui/react';
-
-async function initDB() {
-  try {
-    await fs.promises.readFile('./db/data.json', 'utf-8');
-  } catch (e) {
-    console.log(e);
-    fs.mkdir('db', async (err) => {
-      if (!err) {
-        await fs.promises.writeFile(
-          './db/data.json',
-          JSON.stringify({
-            reservations: [],
-          }),
-          'utf8'
-        );
-      }
-    });
-  }
-}
+import DB from '@/util/dbAdaptor';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -46,7 +26,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  initDB();
+  await DB.initDb();
 
   return (
     <html lang="en" suppressHydrationWarning={true}>

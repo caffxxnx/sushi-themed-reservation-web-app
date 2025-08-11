@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import fs from 'fs';
 import moment from 'moment';
 import GLOBAL_SETTING_VARIABLE from '@/global';
 import { OptionType } from '@/types/global';
 import { NextRequest } from 'next/server';
+import DB from '@/util/dbAdaptor';
 
 function getOpeningTime(queryDate: string) {
   const { SERVICE_START_TIME } = GLOBAL_SETTING_VARIABLE;
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const queryDate = searchParams.get('date') || '';
 
-  const db = await fs.promises.readFile('./db/data.json', 'utf-8');
+  const db = await DB.readReservationDb();
   const reservations = JSON.parse(db).reservations;
 
   const { INTERVAL_MINUTES, NUM_PER_INTERVAL } = GLOBAL_SETTING_VARIABLE;

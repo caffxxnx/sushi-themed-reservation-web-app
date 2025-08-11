@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import fs from 'fs';
+import DB from '@/util/dbAdaptor';
 
 export async function getReservationCount(date: number): Promise<number> {
-  const data = await fs.promises.readFile('./db/data.json', 'utf-8');
+  const data = await DB.readReservationDb();
   const reservations = JSON.parse(data).reservations;
 
   const CURR_NUMBER =

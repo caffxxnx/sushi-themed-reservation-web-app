@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import fs from 'fs';
 import { NextRequest } from 'next/server';
 import { delaySimulator } from '@/util';
+import DB from '@/util/dbAdaptor';
 
 // GET
 export async function GET(
@@ -17,7 +17,7 @@ export async function GET(
 
   const id = (await params).id;
 
-  const db = await fs.promises.readFile('./db/data.json', 'utf-8');
+  const db = await DB.readReservationDb();
   const reservations = JSON.parse(db).reservations;
   const target = _.find(reservations, ['reservationID', id]);
 
