@@ -7,6 +7,7 @@ import { useContext } from 'react';
 import { ReservationContext } from '@/components/reservationProvider';
 import { Box, Button, SimpleGrid, Spinner, Text } from '@chakra-ui/react';
 import BackgroundCanvas from '@/components/home/background-canvas';
+import Navbar from '@/components/home/navbar';
 
 function ClickAction({ info }: { info: Reservation | null }) {
   return (
@@ -34,12 +35,14 @@ export default function Home() {
   const reservation = useContext(ReservationContext);
   return (
     <>
+      <Navbar />
       <BackgroundCanvas />
       <SimpleGrid
         columns={1}
         alignItems="center"
         justifyItems="center"
         h="100%"
+        mt="calc(var(--navbar-height) - var(--layout-gap))"
       >
         <Text
           as="h1"

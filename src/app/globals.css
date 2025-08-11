@@ -2,4 +2,6 @@
 
 :root {
   --chakra-colors-fg: #2F3E46;
+  --layout-gap: 32px;
+  --navbar-height: 60px;
 }

@@ -55,7 +55,7 @@ export default async function RootLayout({
         <ReservationProvider>
           <Provider forcedTheme="light">
             <Flex
-              gap="32px"
+              gap="var(--layout-gap)"
               alignItems="center"
               justifyContent="center"
               p="8"
