@@ -7,7 +7,6 @@ class DBAdaptor {
   private dbPath: string;
 
   constructor() {
-    console.log('hihihihi');
     this.dbPath = path.join(process.cwd(), 'db.json');
     
     if (!fs.existsSync(this.dbPath)) {
