@@ -2,7 +2,7 @@ import fs from 'fs';
 
 import type { Metadata } from 'next';
 import { Provider } from '@/components/ui/provider';
-import { ReservationProvider } from '@/components/reservationProvider';
+import { ReservationProvider } from '@/components/ReservationProvider';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Flex } from '@chakra-ui/react';

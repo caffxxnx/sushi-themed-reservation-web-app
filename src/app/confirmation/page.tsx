@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Flex, Button, Grid, GridItem, Box, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
-import { ReservationContext } from '@/components/reservationProvider';
+import { ReservationContext } from '@/components/ReservationProvider';
 import type { Reservation } from '@/types/global';
 import { Spinner } from '@chakra-ui/react';
 

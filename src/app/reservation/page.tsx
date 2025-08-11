@@ -2,9 +2,9 @@
 
 import moment from 'moment';
 
-import NativeSelectContainer from '@/components/native-select-container';
-import RadioCardContainer from '@/components/radio-card-container';
-import FieldContainer from '@/components/field-container';
+import NativeSelectContainer from '@/components/NativeSelectContainer';
+import RadioCardContainer from '@/components/RadioCardContainer';
+import FieldContainer from '@/components/FieldContainer';
 
 import { Flex, Button, ButtonGroup, Input, Box } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { useContext } from 'react';
-import { ReservationContext } from '@/components/reservationProvider';
+import { ReservationContext } from '@/components/ReservationProvider';
 import { z } from 'zod';
 import useSWRMutation from 'swr/mutation';
 

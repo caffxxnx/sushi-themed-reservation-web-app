@@ -4,10 +4,10 @@ import type { Reservation } from '@/types/global';
 
 import Link from 'next/link';
 import { useContext } from 'react';
-import { ReservationContext } from '@/components/reservationProvider';
+import { ReservationContext } from '@/components/ReservationProvider';
 import { Box, Button, SimpleGrid, Spinner, Text } from '@chakra-ui/react';
-import BackgroundCanvas from '@/components/home/background-canvas';
-import Navbar from '@/components/home/navbar';
+import BackgroundCanvas from '@/components/home/BackgroundCanvas';
+import Navbar from '@/components/home/Navbar';
 
 function ClickAction({ info }: { info: Reservation | null }) {
   return (

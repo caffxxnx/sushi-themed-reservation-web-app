@@ -4,7 +4,7 @@ import { RadioCardContainerProps, OptionType } from '@/types/global';
 import { Flex, Box, RadioCard, Spinner } from '@chakra-ui/react';
 import fetcher from '@/util/fetcher';
 
-export default function radioCardContainer({
+export default function RadioCardContainer({
   register,
   remoteUrl,
   options,
