@@ -85,7 +85,12 @@ export default function Confirmation() {
         ) : (
           ConfirmationInfo(reservationInfo)
         )}
-        <Button colorPalette="blue" onClick={onClick}>
+        <Button
+          bg="brand.400"
+          color="brand.300"
+          _hover={{ bg: 'brand.500' }}
+          onClick={onClick}
+        >
           Back to top
         </Button>
       </Flex>
