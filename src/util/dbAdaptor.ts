@@ -7,8 +7,8 @@ class DBAdaptor {
   private dbPath: string;
 
   constructor() {
-    this.dbPath = path.join(process.cwd(), 'db.json');
-    
+    this.dbPath = path.join(process.cwd(), process.env.DB_PATH || 'db.json');
+
     if (!fs.existsSync(this.dbPath)) {
       console.log('db.json not found, creating a new one...');
       this.initDb();
