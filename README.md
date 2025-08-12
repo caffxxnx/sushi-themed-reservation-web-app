@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Setup
 
-## Getting Started
-
-First, run the development server:
-
+First, install npm packages
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm i
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Next, to start server in different modes.
+You can run:
+```bash
+npm run dev
+OR
+npm run start
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To build the project
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+If you want to deploy on Vercel, please run:
+```bash
+npm i -g vercel // Install vercel cli (if needed)
+npm run deploy // This will go through: login vercel > build > deploy to vercel
+```
 
-## Learn More
+## Tech Stack Used
 
-To learn more about Next.js, take a look at the following resources:
+- chakra-ui
+- lodash
+- moment
+- next
+- react-hook-form
+- swr
+- uuid
+- zod
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Design Decisions and Structure Overview
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+During the design phase, I first analyzed the parameters required for a store’s reservation policy, including:
+- Opening and closing hours  
+- Reservation slot interval (e.g., every 15 minutes)  
+- Maximum number of reservations allowed per slot  
 
-## Deploy on Vercel
+Since requirements vary between stores, these parameters are abstracted into a `ReservationPolicyConfig` configuration object and stored in the database.  
+A future admin interface will allow store owners to dynamically update these parameters, enabling flexibility across different use cases.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+For the order data design, each order includes:
+- **Basic information**: reservation date and time (`reservationDateTime`), customer name, phone number  
+- **System information**: unique identifier (`reservationID`), creation timestamp (`createDateTime`), update timestamp (`updateDateTime`)  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To avoid the predictability and exposure risks of auto-increment IDs, **UUID v4** is used as the `reservationID`.  
+UUID v4 is randomly generated, ensuring strong unpredictability, and is paired with the `createDateTime` field to precisely record creation time for efficient queries and analytics.  
+Additionally, an index on `reservationDateTime` is implemented at the database level to improve query performance and support efficient statistical reporting.
+
+---
+
+### API Design Approach
+The API design process was approached from a **UI-first perspective**, ensuring the data flow aligns naturally with user interactions.
+
+1. **Available Date & Time Retrieval**  
+  - `GET /getAvailableTimeByDate?date={yyyy-MM-dd}&id={reservationID}`  
+    - Returns a list of available reservation times for the specified date.  
+    - **Parameter details**:  
+      - `date`: The target date for which to retrieve available times.  
+      - `id` (optional): When editing an existing reservation, passing its `reservationID` allows the system to exclude that reservation from conflict checks, preventing false positives.
+    - **Note**:  
+      - The returned available times are calculated based on parameters defined in the `ReservationPolicyConfig` configuration file, including business hours (`SERVICE_START_TIME`, `SERVICE_END_TIME`), reservation intervals (`INTERVAL_MINUTES`), and the maximum number of reservations allowed per interval (`NUM_PER_INTERVAL`).  
+      - These settings ensure the returned time slots comply with the store’s operating and reservation policies.  
+    - Rationale: Users must select a date before choosing a time, so the system provides available times based on that date.  
+   - `GET /getAvailableDate`  
+     - Returns a list of available reservation dates, up to the maximum limit defined in `ReservationPolicyConfig`.
+
+2. **Reservation Management**  
+  - `GET /reservations/{reservationID}` → Retrieve a reservation  
+  - `POST /reservations` → Create a new reservation  
+  - `PUT /reservations/{reservationID}` → Update an existing reservation  
+  - `DELETE /reservations/{reservationID}` → Cancel a reservation  
+
+This API structure ensures the UI workflow remains clear, with the retrieval sequence matching the user’s selection process, thereby minimizing extra front-end logic.
+
+### Data Structure
+#### RESERVATION_POLICY_CONFIG
+|Name|RESERVATION_AVAILABLE_DAYS|SERVICE_START_TIME|SERVICE_END_TIME|INTERVAL_MINUTES|NUM_PER_INTERVAL|
+|:---|:---|:---|:---|:---|:---|
+|Type|Int|String|String|Int|Int|
+|Description|Available days from tomorrow|When could reservation be made|When the last reservation could be made|How long between two reservations in minute|How many reservations could be made per interval|
+|Example|30|'10:00'|'21:00'|15|5|
+
+#### RESERVATION_TABLE
+|Name|reservationID|reservationDateTime|Name|Phone|Number|createDateTime|updateDateTime|
+|:---|:---|:---|:---|:---|:---|:---|:---|
+|Type|String|String|String|Int|Int|Int|Int|
+|Description|Reservation id (uuid)|Reservation time (timestamp)|Name for who made the reservation|Phone for who made the reservation|Reservation number on the reservation interval|Reservation created time|Reservation updated time|
+|Example|47fb4229-6445-4321-8bfc-39e90c336a42|1754960400000|Yamada|07012341234|1|1754960400000|1754960400000|
