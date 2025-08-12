@@ -2,12 +2,21 @@
 
 import moment from 'moment';
 
-import { Flex, Button, Grid, GridItem, Box, Text } from '@chakra-ui/react';
+import {
+  Flex,
+  Button,
+  ButtonGroup,
+  Grid,
+  GridItem,
+  Box,
+  Text,
+} from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 import { ReservationContext } from '@/components/ReservationProvider';
 import type { Reservation } from '@/types/global';
 import { Spinner } from '@chakra-ui/react';
+import useSWRMutation from 'swr/mutation';
 
 function ConfirmationInfo({
   reservationInfo,
@@ -73,9 +82,39 @@ export default function Confirmation() {
     updateDateTime: null,
   };
 
-  function onClick() {
+  function onBackToTop() {
     router.push('/');
   }
+
+  async function onCancel() {
+    if (!reservationInfo.reservationID) {
+      return;
+    }
+
+    try {
+      const isConfirmed = window.confirm(
+        `Are you sure you want to cancel the reservation for ${reservationInfo.name}?`
+      );
+
+      if (isConfirmed) {
+        await apiTrigger();
+        window.localStorage.removeItem('reservation-id');
+        reservation.clear();
+        onBackToTop();
+      } else return;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  function cancelReservation(url: string | URL | Request) {
+    return fetch(url, { method: 'DELETE' });
+  }
+
+  const { trigger: apiTrigger, isMutating: apiIsLoading } = useSWRMutation(
+    `/api/reservation/${reservationInfo.reservationID}`,
+    cancelReservation
+  );
 
   return (
     <Flex
@@ -89,13 +128,26 @@ export default function Confirmation() {
         {reservation.isLoading ? (
           <Spinner />
         ) : (
-          <ConfirmationInfo reservationInfo={reservationInfo} />
+          <>
+            <ConfirmationInfo reservationInfo={reservationInfo} />
+            <ButtonGroup size="sm" variant="outline" mt="4" gap="6">
+              <Button
+                bg="brand.600"
+                color="brand.300"
+                _hover={{ bg: 'brand.500' }}
+                loading={apiIsLoading}
+                onClick={onCancel}
+              >
+                Cancel
+              </Button>
+            </ButtonGroup>
+          </>
         )}
+
         <Button
-          bg="brand.400"
-          color="brand.300"
-          _hover={{ bg: 'brand.500' }}
-          onClick={onClick}
+          variant="outline"
+          _hover={{ bg: 'brand.500', color: 'brand.300' }}
+          onClick={onBackToTop}
         >
           Back to top
         </Button>

@@ -17,12 +17,14 @@ interface ReservationProviderProps {
 interface ReservationContextType {
   info: Reservation | null;
   setup: Dispatch<SetStateAction<Reservation | null>>;
+  clear: () => void;
   isLoading: boolean;
 }
 
 export const ReservationContext = createContext<ReservationContextType>({
   info: null,
   setup: () => {},
+  clear: () => {},
   isLoading: false,
 });
 
@@ -65,7 +67,12 @@ export function ReservationProvider({ children }: ReservationProviderProps) {
 
   return (
     <ReservationContext.Provider
-      value={{ info: reservation, setup: setReservation, isLoading }}
+      value={{
+        info: reservation,
+        setup: setReservation,
+        clear: () => setReservation(null),
+        isLoading,
+      }}
     >
       {children}
     </ReservationContext.Provider>
