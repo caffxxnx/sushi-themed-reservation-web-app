@@ -111,7 +111,7 @@ export async function PUT(
       reservationDateTime: reservationDateTime,
       name,
       phone,
-      number: await getReservationCount(reservationDateTime),
+      number: await getReservationCount(reservationDateTime, id),
       createDateTime: target.createDateTime,
       updateDateTime: +moment().format('x'),
     };
