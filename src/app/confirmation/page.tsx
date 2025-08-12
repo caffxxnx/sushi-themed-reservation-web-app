@@ -9,7 +9,11 @@ import { ReservationContext } from '@/components/ReservationProvider';
 import type { Reservation } from '@/types/global';
 import { Spinner } from '@chakra-ui/react';
 
-function ConfirmationInfo(reservationInfo: Reservation) {
+function ConfirmationInfo({
+  reservationInfo,
+}: {
+  reservationInfo: Reservation;
+}) {
   return (
     <>
       <Text fontSize="xl" fontWeight="bold">
@@ -85,7 +89,7 @@ export default function Confirmation() {
         {reservation.isLoading ? (
           <Spinner />
         ) : (
-          ConfirmationInfo(reservationInfo)
+          <ConfirmationInfo reservationInfo={reservationInfo} />
         )}
         <Button
           bg="brand.400"
