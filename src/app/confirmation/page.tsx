@@ -86,6 +86,11 @@ export default function Confirmation() {
     router.push('/');
   }
 
+  function onEdit(id: string | null) {
+    if (!id) return;
+    router.push('/reservation/edit');
+  }
+
   async function onCancel() {
     if (!reservationInfo.reservationID) {
       return;
@@ -139,6 +144,15 @@ export default function Confirmation() {
                 onClick={onCancel}
               >
                 Cancel
+              </Button>
+              <Button
+                bg="brand.400"
+                color="brand.300"
+                _hover={{ bg: 'brand.500' }}
+                loading={apiIsLoading}
+                onClick={() => onEdit(reservationInfo.reservationID)}
+              >
+                Edit
               </Button>
             </ButtonGroup>
           </>
