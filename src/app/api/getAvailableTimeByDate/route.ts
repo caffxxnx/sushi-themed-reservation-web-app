@@ -39,10 +39,10 @@ export async function GET(request: NextRequest) {
   const timeOptions: OptionType[] = [];
   do {
     const isIntervalFull =
-      (_.chain(reservations)
-        .filter(['reservationDateTime', +availableTime.format('x')])
-        .maxBy('number')
-        .value()?.number || 0) >= NUM_PER_INTERVAL;
+      _.filter(reservations, [
+        'reservationDateTime',
+        +availableTime.format('x'),
+      ]).length >= NUM_PER_INTERVAL;
 
     timeOptions.push({
       disabled: isIntervalFull,
