@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { ReservationContext } from '@/components/ReservationProvider';
 import NativeSelectContainer from '@/components/NativeSelectContainer';
 import RadioCardContainer from '@/components/RadioCardContainer';
 import FieldContainer from '@/components/FieldContainer';
@@ -23,6 +25,9 @@ export default function ReservationForm({
   setValue: UseFormSetValue<FormValues>;
   watch: UseFormWatch<FormValues>;
 }) {
+  const reservation = useContext(ReservationContext);
+  const { info } = reservation;
+
   const onDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setValue('time', ''); // Reset time when date changes
     console.log('Selected date:', e.target.value);
@@ -47,7 +52,11 @@ export default function ReservationForm({
           <RadioCardContainer
             register={register('time')}
             align="center"
-            remoteUrl={`/api/getAvailableTimeByDate?date=${formDate}`}
+            remoteUrl={
+              info?.reservationID
+                ? `/api/getAvailableTimeByDate?date=${formDate}&id=${info.reservationID}`
+                : `/api/getAvailableTimeByDate?date=${formDate}`
+            }
             value={watch('time')}
           />
         </FieldContainer>

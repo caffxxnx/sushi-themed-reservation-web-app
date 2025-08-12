@@ -28,6 +28,7 @@ export async function GET(request: NextRequest) {
 
   const searchParams = request.nextUrl.searchParams;
   const queryDate = searchParams.get('date') || '';
+  const selfId = searchParams.get('id');
 
   const db = await DB.readReservationDb();
   const reservations = JSON.parse(db).reservations;
@@ -39,10 +40,10 @@ export async function GET(request: NextRequest) {
   const timeOptions: OptionType[] = [];
   do {
     const isIntervalFull =
-      _.filter(reservations, [
-        'reservationDateTime',
-        +availableTime.format('x'),
-      ]).length >= NUM_PER_INTERVAL;
+      _.chain(reservations)
+        .filter((o) => o.reservationID !== selfId) // Exclude self if editing
+        .filter(['reservationDateTime', +availableTime.format('x')])
+        .value().length >= NUM_PER_INTERVAL;
 
     timeOptions.push({
       disabled: isIntervalFull,
