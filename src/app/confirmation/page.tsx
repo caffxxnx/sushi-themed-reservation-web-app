@@ -65,6 +65,8 @@ export default function Confirmation() {
     name: '',
     phone: '',
     number: null,
+    createDateTime: null,
+    updateDateTime: null,
   };
 
   function onClick() {

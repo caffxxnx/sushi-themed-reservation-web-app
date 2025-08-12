@@ -27,6 +27,8 @@ export type Reservation = {
   name: string | null;
   phone: string | null;
   number: number | null;
+  createDateTime: number | null;
+  updateDateTime: number | null;
 };
 
 // ==============================

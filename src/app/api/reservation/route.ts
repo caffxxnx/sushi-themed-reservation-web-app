@@ -1,4 +1,5 @@
-import { Reservation } from '@/types/global';
+import type { Reservation } from '@/types/global';
+import moment from 'moment';
 import { getReservationCount } from '@/util';
 import { v4 as uuidv4 } from 'uuid';
 import DB from '@/util/dbAdaptor';
@@ -22,6 +23,8 @@ export async function POST(request: Request) {
       name,
       phone,
       number: await getReservationCount(reservationDateTime),
+      createDateTime: +moment().format('x'),
+      updateDateTime: null
     };
 
     const db = await DB.readReservationDb();
