@@ -1,17 +1,17 @@
 import _ from 'lodash';
 import moment from 'moment';
-import GLOBAL_SETTING_VARIABLE from '@/global';
+import RESERVATION_POLICY_CONFIG from '@/global';
 import { OptionType } from '@/types/global';
 import { NextRequest } from 'next/server';
 import DB from '@/util/dbAdaptor';
 
 function getOpeningTime(queryDate: string) {
-  const { SERVICE_START_TIME } = GLOBAL_SETTING_VARIABLE;
+  const { SERVICE_START_TIME } = RESERVATION_POLICY_CONFIG;
   return moment(`${queryDate} ${SERVICE_START_TIME}`);
 }
 
 function getCloseTime(queryDate: string) {
-  const { SERVICE_END_TIME } = GLOBAL_SETTING_VARIABLE;
+  const { SERVICE_END_TIME } = RESERVATION_POLICY_CONFIG;
   return moment(`${queryDate} ${SERVICE_END_TIME}`);
 }
 
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
   const db = await DB.readReservationDb();
   const reservations = JSON.parse(db).reservations;
 
-  const { INTERVAL_MINUTES, NUM_PER_INTERVAL } = GLOBAL_SETTING_VARIABLE;
+  const { INTERVAL_MINUTES, NUM_PER_INTERVAL } = RESERVATION_POLICY_CONFIG;
 
   const availableTime = getOpeningTime(queryDate);
   const CLOSING_TIME = getCloseTime(queryDate);
