@@ -16,7 +16,7 @@ function getCloseTime(queryDate: string) {
 }
 
 export async function GET(request: NextRequest) {
-  if(!request.nextUrl.searchParams.has('date')) {
+  if (!request.nextUrl.searchParams.has('date')) {
     return new Response(
       JSON.stringify({ error: 'Date parameter is required' }),
       {
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       }
     );
   }
-  
+
   const searchParams = request.nextUrl.searchParams;
   const queryDate = searchParams.get('date') || '';
 

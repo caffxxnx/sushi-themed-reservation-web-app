@@ -49,7 +49,7 @@ export async function DELETE(
   }
 
   const id = (await params).id;
-  
+
   const db = await DB.readReservationDb();
   const reservations = JSON.parse(db).reservations;
   const targetIndex = _.findIndex(reservations, ['reservationID', id]);
