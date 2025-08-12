@@ -8,6 +8,7 @@ export default function RadioCardContainer({
   register,
   remoteUrl,
   options,
+  value,
   ...rest
 }: RadioCardContainerProps) {
   let optionsToUse: Array<OptionType> = [];
@@ -28,7 +29,7 @@ export default function RadioCardContainer({
   }
 
   return (
-    <RadioCard.Root {...rest}>
+    <RadioCard.Root {...rest} value={value}>
       <Flex gap="10px" wrap="wrap">
         {optionsToUse.map((item) => (
           <Box w="80px" key={item.value}>

@@ -2,28 +2,18 @@
 
 import moment from 'moment';
 
-import NativeSelectContainer from '@/components/NativeSelectContainer';
-import RadioCardContainer from '@/components/RadioCardContainer';
-import FieldContainer from '@/components/FieldContainer';
+import type { FormValues } from '@/components/reservation/formSchema';
+import ReservationForm from '@/components/reservation/ReservationForm';
+import { formSchema } from '@/components/reservation/formSchema';
 
-import { Flex, Button, ButtonGroup, Input, Box } from '@chakra-ui/react';
+import { Flex, Button, ButtonGroup, Box } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { useContext } from 'react';
 import { ReservationContext } from '@/components/ReservationProvider';
-import { z } from 'zod';
 import useSWRMutation from 'swr/mutation';
-
-const formSchema = z.object({
-  date: z.string().min(1, { message: 'Date is required' }),
-  time: z.string({ message: 'Time is required' }),
-  name: z.string().nonempty({ message: 'Name is required' }),
-  phone: z.string().nonempty({ message: 'Phone is required' }),
-});
-
-type FormValues = z.infer<typeof formSchema>;
 
 export default function Reservation() {
   const router = useRouter();
@@ -79,14 +69,6 @@ export default function Reservation() {
 
   const onBack = () => router.back();
 
-  const onDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setValue('time', ''); // Reset time when date changes
-    console.log('Selected date:', e.target.value);
-  };
-
-  const formDate = watch('date');
-  const formTime = watch('time');
-
   return (
     <>
       <Box w="100%" h="100%" maxW="450px">
@@ -98,47 +80,12 @@ export default function Reservation() {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Flex w="100%" gap="20px" direction="column" alignItems="center">
-              <FieldContainer label="Date" prop="date" errors={errors}>
-                <NativeSelectContainer
-                  register={register('date')}
-                  placeholder="Select a date"
-                  remoteUrl="/api/getAvailableDate"
-                  onChange={onDateChange}
-                />
-              </FieldContainer>
-
-              {formDate && (
-                <FieldContainer label="Time" prop="time" errors={errors}>
-                  <RadioCardContainer
-                    register={register('time')}
-                    align="center"
-                    remoteUrl={`/api/getAvailableTimeByDate?date=${formDate}`}
-                  />
-                </FieldContainer>
-              )}
-
-              {formTime && (
-                <>
-                  <FieldContainer label="Name" prop="name" errors={errors}>
-                    <Input
-                      placeholder="Yamada Mahito"
-                      {...register('name')}
-                      bg="brand.300"
-                    />
-                  </FieldContainer>
-
-                  <FieldContainer label="Phone" prop="phone" errors={errors}>
-                    <Input
-                      placeholder="07012345678"
-                      {...register('phone')}
-                      bg="brand.300"
-                    />
-                  </FieldContainer>
-                </>
-              )}
-            </Flex>
-
+            <ReservationForm
+              errors={errors}
+              register={register}
+              setValue={setValue}
+              watch={watch}
+            />
             <ButtonGroup size="sm" variant="outline" mt="4" gap="6">
               <Button
                 onClick={onBack}
