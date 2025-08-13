@@ -94,11 +94,11 @@ This API structure ensures the UI workflow remains clear, with the retrieval seq
 |Example|30|'10:00'|'21:00'|15|5|
 
 #### RESERVATION_TABLE
-|Name|reservationID|reservationDateTime|Name|Phone|Number|createDateTime|updateDateTime|
-|:---|:---|:---|:---|:---|:---|:---|:---|
-|Type|String|String|String|Int|Int|Int|Int|
-|Description|Reservation id (uuid)|Reservation time (timestamp)|Name for who made the reservation|Phone for who made the reservation|Reservation number on the reservation interval|Reservation created time|Reservation updated time|
-|Example|47fb4229-6445-4321-8bfc-39e90c336a42|1754960400000|Yamada|07012341234|1|1754960400000|1754960400000|
+|Name|reservationID|reservationDateTime|Name|Phone|Guests|Number|createDateTime|updateDateTime|
+|:---|:---|:---|:---|:---|:---|:---|:---|:---|
+|Type|String|String|String|String|Int|Int|Int|Int|
+|Description|Reservation id (uuid)|Reservation time (timestamp)|Name for who made the reservation|Phone for who made the reservation|Number of guests|Reservation number on the reservation interval|Reservation created time|Reservation updated time|
+|Example|47fb4229-6445-4321-8bfc-39e90c336a42|1754960400000|Yamada|07012341234|3|1|1754960400000|1754960400000|
 
 ## Production Link (Vercel)
 https://sushi-themed-reservation-web-app.vercel.app/
