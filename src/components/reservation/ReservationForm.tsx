@@ -77,6 +77,7 @@ export default function ReservationForm({
               placeholder="07012345678"
               {...register('phone')}
               bg="brand.300"
+              type="tel"
             />
           </FieldContainer>
 
