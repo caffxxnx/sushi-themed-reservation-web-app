@@ -1,24 +1,30 @@
 ## Setup
 
-First, install npm packages
+**First, install npm packages**
 ```bash
 npm i
 ```
 
-Next, to start server in different modes.
-You can run:
+**Next, to start server in different modes.**
+You can run either:
 ```bash
 npm run dev
 OR
 npm run start
 ```
 
-To build the project
+**To build the project**
 ```bash
 npm run build
 ```
 
-If you want to deploy on Vercel, please run:
+**If you want to deploy on Vercel:**
+Create a `.env` file with code below:
+```bash
+NODE_ENV=production
+DB_PATH=../../tmp/db.json
+```
+And then please run:
 ```bash
 npm i -g vercel // Install vercel cli (if needed)
 npm run deploy // This will go through: login vercel > build > deploy to vercel
