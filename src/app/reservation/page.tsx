@@ -28,6 +28,7 @@ export default function Reservation() {
         reservationDateTime: +moment(DATE_TIME_TEXT).format('x'),
         name: getValues('name'),
         phone: getValues('phone'),
+        guests: getValues('guests'),
       }),
     });
   }

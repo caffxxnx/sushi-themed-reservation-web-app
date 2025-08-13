@@ -79,6 +79,10 @@ export default function ReservationForm({
               bg="brand.300"
             />
           </FieldContainer>
+
+          <FieldContainer label="Guests" prop="guests" errors={errors}>
+            <Input {...register('guests')} bg="brand.300" type="number" />
+          </FieldContainer>
         </>
       )}
     </Flex>

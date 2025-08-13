@@ -104,13 +104,14 @@ export async function PUT(
     console.log('Editing reservation with ID:', id);
     const target = reservations[targetIndex];
     const body = await request.json();
-    const { reservationDateTime, name, phone } = body;
+    const { reservationDateTime, name, phone, guests } = body;
 
     const editedReservation: Reservation = {
       reservationID: id,
       reservationDateTime: reservationDateTime,
       name,
       phone,
+      guests: +guests,
       number: await getReservationCount(reservationDateTime, id),
       createDateTime: target.createDateTime,
       updateDateTime: +moment().format('x'),

@@ -15,13 +15,14 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const { reservationDateTime, name, phone } = body;
+    const { reservationDateTime, guests, name, phone } = body;
 
     const newReservation: Reservation = {
       reservationID: uuidv4(),
       reservationDateTime,
       name,
       phone,
+      guests: +guests,
       number: await getReservationCount(reservationDateTime),
       createDateTime: +moment().format('x'),
       updateDateTime: null

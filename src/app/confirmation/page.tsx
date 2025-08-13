@@ -56,6 +56,13 @@ function ConfirmationInfo({
           <Box>{reservationInfo.phone}</Box>
         </GridItem>
 
+        <GridItem>
+          <Box>Guests</Box>
+        </GridItem>
+        <GridItem>
+          <Box>{reservationInfo.guests}</Box>
+        </GridItem>
+
         <GridItem colSpan={2}>
           <Box textAlign="center" fontWeight="500" fontSize="50px">
             {reservationInfo.number
@@ -78,6 +85,7 @@ export default function Confirmation() {
     name: '',
     phone: '',
     number: null,
+    guests: null,
     createDateTime: null,
     updateDateTime: null,
   };

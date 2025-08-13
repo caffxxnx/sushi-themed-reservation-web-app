@@ -26,6 +26,7 @@ export type Reservation = {
   reservationDateTime: number | null;
   name: string | null;
   phone: string | null;
+  guests: number | null;
   number: number | null;
   createDateTime: number | null;
   updateDateTime: number | null;

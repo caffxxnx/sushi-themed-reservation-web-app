@@ -5,6 +5,9 @@ export const formSchema = z.object({
   time: z.string({ message: 'Time is required' }),
   name: z.string().nonempty({ message: 'Name is required' }),
   phone: z.string().nonempty({ message: 'Phone is required' }),
+  guests: z
+    .string()
+    .refine((n) => +n > 0, { message: 'Number is required' }),
 });
 
 export type FormValues = z.infer<typeof formSchema>;

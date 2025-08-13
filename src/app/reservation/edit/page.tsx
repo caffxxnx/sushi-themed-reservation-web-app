@@ -41,6 +41,7 @@ export default function Reservation() {
       );
       setValue('name', reservation.info.name ?? '');
       setValue('phone', reservation.info.phone ?? '');
+      setValue('guests', String(reservation.info.guests ?? 0));
     }
   }, [reservation.info, setValue]);
 
@@ -53,6 +54,7 @@ export default function Reservation() {
         reservationDateTime: +moment(DATE_TIME_TEXT).format('x'),
         name: getValues('name'),
         phone: getValues('phone'),
+        guests: getValues('guests'),
       }),
     });
   }
